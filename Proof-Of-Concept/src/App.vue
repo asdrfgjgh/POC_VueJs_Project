@@ -95,7 +95,7 @@ function setLanguage(lang: string) {
   background-color: #c41e1e;
   box-shadow: 0 0 80px 40px var(--color-accent);
   opacity: 0.35;
-  clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+
 }
 
 .app-header {
