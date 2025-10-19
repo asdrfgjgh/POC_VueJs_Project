@@ -1,6 +1,6 @@
 // In src/services/api.ts
 
-const VITE_BASE_URL = "https://apijobbahub.azurewebsites.net/api";
+const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const getAllModules = async (
   page: number,
@@ -29,7 +29,7 @@ export const getAllModules = async (
     params.append('studycredit', studycredit.toString());
   }
 
-  const url = `${VITE_BASE_URL}/modules?${params.toString()}`;
+  const url = `${VITE_API_BASE_URL}/modules?${params.toString()}`;
 
   const response = await fetch(url);
   if (!response.ok) {
@@ -45,7 +45,7 @@ export async function updateStudentProfile(studentId: string, data: { name: stri
     throw new Error('Niet geauthenticeerd.');
   }
 
-  const response = await fetch(`${VITE_BASE_URL}/students/${studentId}`, {
+  const response = await fetch(`${VITE_API_BASE_URL}/students/${studentId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ export async function updateStudentProfile(studentId: string, data: { name: stri
 }
 
 export const getAllStudents = async () => {
-  const response = await fetch(`${VITE_BASE_URL}/students`);
+  const response = await fetch(`${VITE_API_BASE_URL}/students`);
   if (!response.ok) {
     throw new Error('Failed to fetch students');
   }
@@ -70,7 +70,7 @@ export const getAllStudents = async () => {
 }
 
 export const getStudentById = async (id: string) => {
-  const response = await fetch(`${VITE_BASE_URL}/students/${id}`);
+  const response = await fetch(`${VITE_API_BASE_URL}/students/${id}`);
   if (!response.ok) {
     throw new Error('Failed to fetch student');
   }
@@ -85,7 +85,7 @@ export const updateShortlist = async (studentId: string, moduleId: string, actio
     throw new Error('Niet geauthenticeerd voor het bijwerken van de shortlist.');
   }
 
-  const response = await fetch(`${VITE_BASE_URL}/students/${studentId}/shortlist`, {
+  const response = await fetch(`${VITE_API_BASE_URL}/students/${studentId}/shortlist`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ export const updateShortlist = async (studentId: string, moduleId: string, actio
 
 
 export const getStudentTagCounts = async (studentId: string) => {
-  const response = await fetch(`${VITE_BASE_URL}/students/${studentId}/tag-counts`);
+  const response = await fetch(`${VITE_API_BASE_URL}/students/${studentId}/tag-counts`);
   if (!response.ok) {
     throw new Error('Failed to fetch tag counts');
   }
@@ -112,7 +112,7 @@ export const getStudentTagCounts = async (studentId: string) => {
 }
 
 export const getAllTags = async () => {
-  const response = await fetch(`${VITE_BASE_URL}/tags`);
+  const response = await fetch(`${VITE_API_BASE_URL}/tags`);
   if (!response.ok) {
     throw new Error('Failed to fetch tags');
   }
@@ -120,7 +120,7 @@ export const getAllTags = async () => {
 };
 
 export const getAllModulesForAnalytics = async () => {
-  const response = await fetch(`${VITE_BASE_URL}/modules/all-for-analytics`);
+  const response = await fetch(`${VITE_API_BASE_URL}/modules/all-for-analytics`);
   if (!response.ok) {
     throw new Error('Failed to fetch modules for analytics');
   }
@@ -128,7 +128,7 @@ export const getAllModulesForAnalytics = async () => {
 };
 
 export async function registerUser(name: string, email: string, password: string) {
-  const response = await fetch(`${VITE_BASE_URL}/auth/register`, {
+  const response = await fetch(`${VITE_API_BASE_URL}/auth/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -145,7 +145,7 @@ export async function registerUser(name: string, email: string, password: string
 }
 
 export async function loginUser(email: string, password: string) {
-  const response = await fetch(`${VITE_BASE_URL}/auth/login`, {
+  const response = await fetch(`${VITE_API_BASE_URL}/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -162,7 +162,7 @@ export async function loginUser(email: string, password: string) {
 }
 
 export const getModuleFilterOptions = async () => {
-  const url = `${VITE_BASE_URL}/modules/filters`;
+  const url = `${VITE_API_BASE_URL}/modules/filters`;
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error('Failed to fetch filter options');
