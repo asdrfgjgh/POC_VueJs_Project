@@ -44,4 +44,4 @@ jobs:
           app-name: "ApiJobbahub"
           slot-name: "Production"
           # 👇 CORRECTIE 2: Vertel Azure om alleen de /backend map te deployen
-          package: ./backend
+          package: ./backend/dist
