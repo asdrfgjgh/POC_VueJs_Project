@@ -85,17 +85,18 @@ function setLanguage(lang: string) {
 }
 
 #app-background::after {
-  content: '';
+  content: ''; /* Content is now handled by background-image */
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 250px;
-  height: 250px;
-  background-color: #c41e1e;
-  box-shadow: 0 0 80px 40px var(--color-accent);
-  opacity: 0.35;
-
+  width: 1200px; /* Increased size */
+  height: 1200px; /* Increased size */
+  background-image: url('@/assets/avans-logo.png'); /* Use the actual Avans logo */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.05; /* Keep it vague */
 }
 
 .app-header {

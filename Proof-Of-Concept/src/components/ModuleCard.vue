@@ -10,7 +10,7 @@ const emit = defineEmits(['view-details']);
 
 const userStore = useUserStore();
 // 👇 CORRECTIE 1: 'selectedUser' is nu 'user'
-const { user } = storeToRefs(userStore);
+const { user, isAuthenticated } = storeToRefs(userStore); // Voeg isAuthenticated toe
 const { t } = useLocale(); // Gebruik de useLocale composable
 
 const props = defineProps<{
@@ -50,98 +50,147 @@ function handleFavoriteClick() {
   userStore.toggleShortlist(props.module._id, props.module);
 }
 
-function handleCardClick() {
+function handleMoreInfoClick(event: Event) {
+  event.stopPropagation(); // Stop de event bubbeling
   emit('view-details', props.module);
+}
+
+function handleOsirisClick(event: Event) {
+  event.stopPropagation(); // Stop de event bubbeling
+  // Implementeer hier de logica om naar Osiris te navigeren
+  // Bijvoorbeeld: window.open(props.module.osirisLink, '_blank');
+  alert('Aanmelden via Osiris is nog niet geïmplementeerd.'); // T-tijdelijke placeholder
 }
 </script>
 
 <template>
-  <div class="hero-container clickable-card" @click="handleCardClick">
-    <div class="hero-image">
-      <img :src="getImageUrl(module._id)" :alt="t('imageAltText') + module.name" />
-    </div>
-    <div class="hero-content">
-      <div class="course-info">
-        <h2 class="course-title">
-          {{ module.name }}
-          <button class="favorite-button" @click.stop="handleFavoriteClick">
-            <span>{{ isFavorite ? '⭐' : '☆' }}</span>
-          </button>
-        </h2>
-        <p class="course-description">{{ module.description }}</p>
-        <p><strong>{{ t('studyPointsLabel') }}</strong> {{ module.studycredit }} ECTS</p>
+  <div class="module-card">
+    <div class="card-image-container">
+      <img :src="getImageUrl(module._id)" :alt="t('imageAltText') + module.name" class="card-image" />
+      <div class="level-credits-badges">
+        <span class="badge level-badge" v-if="module.level">{{ t('levelFilter') }} {{ module.level }}</span>
+        <span class="badge credits-badge" v-if="module.studycredit">{{ t('studyCreditsFilter') }} {{ module.studycredit }}</span>
       </div>
+      <button v-if="isAuthenticated" class="favorite-button" @click.stop="handleFavoriteClick">
+        <span>{{ isFavorite ? '⭐' : '☆' }}</span>
+      </button>
+    </div>
+    <div class="card-content">
+      <h2 class="module-title">{{ module.name }}</h2>
+      <p class="module-description">{{ module.description }}</p>
 
       <div class="tags-container" v-if="module.tags && module.tags.length > 0">
         <span v-for="tag in module.tags" :key="tag._id" class="tag">
           {{ tag.name }}
         </span>
       </div>
+
+      <div class="card-actions">
+        <button @click="handleMoreInfoClick" class="info-button">{{ t('moreInfoButton') }}</button>
+        <button @click="handleOsirisClick" class="osiris-button">{{ t('registerOsirisButton') }}</button>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-
-.hero-container {
-  display: flex;
-  align-items: stretch;
+.module-card {
+  background-color: white;
   border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  min-height: 250px; /* Maak de kaart langer */
+  display: flex;
+  flex-direction: column;
+  transition: none;
 }
 
-.clickable-card {
-  cursor: pointer;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+.card-image-container {
+  position: relative;
+  width: 100%;
+  height: 200px; /* Vaste hoogte voor de afbeelding */
+  overflow: hidden;
 }
 
-.clickable-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-}
-
-.hero-image {
-  flex: 0 0 250px; /* Geef de afbeelding meer ruimte */
-}
-
-.hero-image img {
+.card-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.hero-content {
-  flex-grow: 1;
+.level-credits-badges {
+  position: absolute;
+  top: 10px;
+  left: 10px;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 1.5rem;
+  gap: 8px;
+  z-index: 2;
 }
 
-.course-title {
+.badge {
+  background-color: #f0f0f0; /* Lichtgrijze achtergrond */
+  color: #333; /* Donkere tekstkleur */
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.favorite-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: white; /* Witte achtergrond */
+  border: 1px solid #e60000; /* Rode rand */
+  color: #e60000; /* Rode ster */
+  font-size: 1.2rem;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 2;
   display: flex;
-  justify-content: space-between;
   align-items: center;
 }
 
-.course-description {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  /* 👇 CORRECTIE 3: Standaard 'line-clamp' toegevoegd */
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  -webkit-box-orient: vertical;
-  line-height: 1.4em;
-  max-height: calc(1.4em * 3); 
+.favorite-button span {
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+.favorite-button:hover {
+  background-color: #e60000;
+  color: white;
+}
+
+.card-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.module-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #1a1a1a; /* Donkergrijs */
+  margin-bottom: 0.5rem;
+}
+
+.module-description {
+  font-size: 0.95rem;
+  color: #555555; /* Zachtere donkergrijs */
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  flex-grow: 1; /* Zorgt ervoor dat de beschrijving de beschikbare ruimte inneemt */
 }
 
 .tags-container {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .tag {
@@ -153,10 +202,40 @@ function handleCardClick() {
   font-weight: 600;
 }
 
-.favorite-button {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
+.card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.info-button,
+.osiris-button {
+  padding: 10px 15px;
+  border-radius: 4px;
+  font-weight: bold;
   cursor: pointer;
+  transition: background-color 0.2s ease;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.info-button {
+  background-color: #e0e0e0; /* Lichtgrijs */
+  border: 1px solid #ccc;
+  color: #333;
+}
+
+.info-button:hover {
+  background-color: #cccccc;
+}
+
+.osiris-button {
+  background-color: #3e8ed0; /* Blauw */
+  border: none;
+  color: white;
+}
+
+.osiris-button:hover {
+  background-color: #357ABD;
 }
 </style>

@@ -74,16 +74,16 @@ const translations: Translations = {
   },
   // New translations for ModulesView filters
   levelFilter: {
-    NL: 'Niveau',
-    EN: 'Level',
+    NL: 'Niveau:',
+    EN: 'Level:',
   },
   locationFilter: {
-    NL: 'Locatie',
-    EN: 'Location',
+    NL: 'Locatie:',
+    EN: 'Location:',
   },
   studyCreditsFilter: {
-    NL: 'Studiecredits',
-    EN: 'Study Credits',
+    NL: 'Studiecredits:',
+    EN: 'Study Credits:',
   },
   allLevels: {
     NL: 'Alle Niveaus',
@@ -104,6 +104,18 @@ const translations: Translations = {
   homeWelcomeText: {
     NL: 'Gebruik de navigatie hierboven om de modules te bekijken',
     EN: 'Use the navigation above to view the modules',
+  },
+  homeParagraph1: {
+    NL: 'Welkom op de Keuzemodule Applicatie van Jobbahub! Deze applicatie is ontworpen om studenten te helpen bij het verkennen en selecteren van keuzemodules die het beste aansluiten bij hun interesses en studiepad.',
+    EN: 'Welcome to the Elective Module Application of Jobbahub! This application is designed to help students explore and select elective modules that best fit their interests and study path.',
+  },
+  homeParagraph2: {
+    NL: 'Blader door ons uitgebreide aanbod van modules, filter op tags, niveau, locatie en studiepunten, en voeg je favorieten toe aan je persoonlijke shortlist. Ontdek nieuwe mogelijkheden en plan je academische route met gemak.',
+    EN: 'Browse our extensive range of modules, filter by tags, level, location, and study credits, and add your favorites to your personal shortlist. Discover new opportunities and plan your academic route with ease.',
+  },
+  homeParagraph3: {
+    NL: 'Of je nu op zoek bent naar verdieping in je hoofdvak, of een breed scala aan onderwerpen wilt verkennen, Jobbahub ondersteunt je in het maken van weloverwogen keuzes voor jouw toekomst. Begin vandaag nog met het ontdekken van jouw ideale modules!',
+    EN: 'Whether you are looking to deepen your major, or explore a wide range of subjects, Jobbahub supports you in making informed choices for your future. Start discovering your ideal modules today!',
   },
   imageAltText: {
     NL: 'Afbeelding voor ',
@@ -224,6 +236,14 @@ const translations: Translations = {
   legend: {
     NL: 'Legenda',
     EN: 'Legend',
+  },
+  moreInfoButton: {
+    NL: 'Meer info',
+    EN: 'More info',
+  },
+  registerOsirisButton: {
+    NL: 'Aanmelden via Osiris',
+    EN: 'Register via Osiris',
   },
   myFavoritesTitle: {
     NL: 'Mijn Favorieten',

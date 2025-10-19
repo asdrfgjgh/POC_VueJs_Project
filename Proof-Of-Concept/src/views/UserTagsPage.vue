@@ -5,7 +5,6 @@ import { storeToRefs } from 'pinia';
 import * as api from '../services/api';
 // 👇 Importeren van de benodigde types
 import type { ITag, IChoiceModule } from '../types';
-import PieChart from '../components/PieChart.vue';
 import ModuleRecommendations from '../components/ModuleRecommendations.vue';
 import { useLocale } from '@/locale'; // Import useLocale
 
@@ -125,7 +124,7 @@ const hasFavorites = computed(() => {
           </ul>
         </div>
         <div class="chart-container">
-          <PieChart :chart-data="chartData" />
+          
         </div>
       </div>
       <ModuleRecommendations :shortlisted-modules="user.shortlisted_modules" />

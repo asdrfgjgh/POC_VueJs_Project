@@ -7,7 +7,7 @@ import { storeToRefs } from 'pinia'; // Importeer storeToRefs
 
 const userStore = useUserStore();
 
-const { user } = storeToRefs(userStore);
+const { user, isAuthenticated } = storeToRefs(userStore); // Voeg isAuthenticated toe
 // Dit component verwacht een 'module' object als prop
 const props = defineProps<{
   module: IChoiceModule;
@@ -40,7 +40,7 @@ function handleClose() {
     <div class="modal-content">
       <div class="modal-header">
         <h2 class="module-title">{{ module.name }}</h2>
-        <button class="favorite-button" @click="handleFavoriteClick">
+        <button v-if="isAuthenticated" class="favorite-button" @click="handleFavoriteClick">
           <span>{{ isFavorite ? '⭐' : '☆' }}</span>
         </button>
         <button class="close-button" @click="handleClose">×</button>
@@ -90,7 +90,7 @@ function handleClose() {
 }
 
 .modal-content {
-  background: #2c2c2c;
+  background: #f9f9f9; /* Lichter grijs/wit */
   padding: 2rem;
   border-radius: 8px;
   width: 90%;
@@ -111,7 +111,7 @@ function handleClose() {
 }
 
 .module-title {
-  color: #fff;
+  color: #333; /* Donkerder tekst voor lichte achtergrond */
   margin: 0;
   flex-grow: 1;
 }
@@ -138,7 +138,7 @@ function handleClose() {
 }
 
 .modal-body p {
-  color: #ccc;
+  color: #555; /* Donkerder tekst voor lichte achtergrond */
 }
 
 .details-grid {
@@ -147,12 +147,16 @@ function handleClose() {
   gap: 1rem;
   margin: 1.5rem 0;
   padding: 1rem;
-  background-color: #333;
+  background-color: #f0f0f0; /* Lichter grijs */
   border-radius: 4px;
 }
 
 .details-grid div {
-  color: #fff;
+  color: #333; /* Donkerder tekst voor lichte achtergrond */
+}
+
+.details-grid div strong {
+  color: #1a1a1a; /* Very dark grey for labels */
 }
 
 .module-section {
@@ -160,8 +164,8 @@ function handleClose() {
 }
 
 .module-section h3 {
-  color: #fff;
-  border-bottom: 1px solid #555;
+  color: #333; /* Donkerder tekst voor lichte achtergrond */
+  border-bottom: 1px solid #bbb;
   padding-bottom: 0.5rem;
   margin-bottom: 1rem;
 }
@@ -171,7 +175,7 @@ function handleClose() {
 }
 
 .tags-container h3 {
-   color: #fff;
+   color: #333; /* Donkerder tekst voor lichte achtergrond */
    margin-bottom: 1rem;
 }
 
