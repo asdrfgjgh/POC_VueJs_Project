@@ -11,8 +11,8 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write # Vereist voor OIDC login
-      contents: read
+      id-token: write # Dit is nodig om in te loggen op Azure
+      contents: read # Dit is nodig om je code te kunnen 'checken'
 
     steps:
       - name: Checkout repository
@@ -24,27 +24,23 @@ jobs:
           node-version: "20.x"
 
       - name: Install dependencies and build
-        # Commando's uitvoeren in de /backend map
+        # 👇 CORRECTIE 1: Voer deze commando's uit in de /backend map
         working-directory: ./backend
         run: |
           npm install
-          npm run build
+          npm run build --if-present
 
-      # HIER WORDT DE INLOGMETHODE GEWIJZIGD NAAR OIDC
-      - name: Azure Login via OIDC
+      - name: Login to Azure
         uses: azure/login@v2
         with:
-          # Gebruik de Subscription ID uit GitHub Secrets
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          # OIDC vertrouwensrelatie wordt automatisch gebruikt
-          # client-id en tenant-id zijn NIET MEER nodig omdat we OIDC gebruiken
+          client-id: ${{ secrets.CLIENT_ID }}
+          tenant-id: ${{ secrets.TENANT_ID }}
+          subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
 
-      # Zorg ervoor dat de App Service Opstartopdracht is ingesteld op "npm start"
-      # De 'package' wijst naar de /backend map om de inhoud te uploaden naar wwwroot
-      - name: "Deploy Backend to Azure Web App"
+      - name: "Deploy to Azure Web App"
         uses: azure/webapps-deploy@v3
         with:
           app-name: "ApiJobbahub"
           slot-name: "Production"
-          # De output van de build (de /backend map) wordt gedeployed
+          # 👇 CORRECTIE 2: Vertel Azure om alleen de /backend map te deployen
           package: ./backend
