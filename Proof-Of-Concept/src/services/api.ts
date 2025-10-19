@@ -1,6 +1,6 @@
 // In src/services/api.ts
 
-const VITE_BASE_URL = import.meta.env.VITE_BASE_URL;
+const VITE_BASE_URL = "https://apijobbahub.azurewebsites.net/api";
 
 export const getAllModules = async (
   page: number,
