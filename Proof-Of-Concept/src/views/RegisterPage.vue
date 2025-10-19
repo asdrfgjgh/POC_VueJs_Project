@@ -25,7 +25,7 @@ async function handleRegister() {
 </script>
 
 <template>
-  <div class="view-container">
+  <div class="view-container" style="background-color: white;">
     <div class="auth-form">
       <h2>{{ t('registerTitle') }}</h2>
       <form @submit.prevent="handleRegister">
@@ -54,8 +54,9 @@ async function handleRegister() {
   max-width: 400px;
   margin: 2rem auto;
   padding: 2rem;
-  background-color: #2c2c2c;
+  background-color: #ffffff; /* Pure white background */
   border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Add a subtle shadow */
 }
 .form-group {
   margin-bottom: 1rem;
@@ -63,15 +64,20 @@ async function handleRegister() {
 label {
   display: block;
   margin-bottom: 0.5rem;
-  color: #fff;
+  color: #333; /* Darker text for contrast */
 }
 input {
   width: 100%;
-  padding: 0.5rem;
-  border-radius: 4px;
-  border: 1px solid #555;
-  background-color: #333;
-  color: #fff;
+  padding: 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff; /* White background for input */
+  color: #333;
+  font-size: 1em;
+}
+input:focus {
+  outline: none;
+  border-color: var(--color-accent); /* Highlight on focus */
 }
 button {
   width: 100%;

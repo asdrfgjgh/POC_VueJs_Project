@@ -134,7 +134,7 @@ function handleClose() {
 }
 
 .close-button:hover {
-  color: #fff;
+  color: #333; /* Darker color on hover */
 }
 
 .modal-body p {
