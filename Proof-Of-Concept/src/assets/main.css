@@ -1,0 +1,221 @@
+/* src/assets/main.css */
+
+/* =============================================
+   1. Variabelen & Thema
+   ============================================= */
+:root {
+  /* Lettertypes */
+  --font-family-base: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+    Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+
+  /* Kleurenschema */
+  --color-background: #1a1a1a;
+  --color-background-soft: #242424;
+  --color-background-mute: #2e2e2e;
+
+  --color-text: #ffffff;
+  --color-text-soft: rgba(235, 235, 235, 0.64);
+  --color-heading: #ffffff;
+
+  --color-accent: #c41e1e;
+  --color-accent-hover: #dc4e4e;
+
+  --color-border: #444;
+  --color-border-hover: #666;
+
+  --color-error: #ff6b6b;
+  --color-success: #51cf66;
+}
+
+/* =============================================
+   2. Basis & Reset
+   ============================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-text);
+  background: var(--color-background);
+  transition: color 0.5s, background-color 0.5s;
+  line-height: 1.6;
+  font-family: var(--font-family-base);
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* =============================================
+   3. Globale Stijlen
+   ============================================= */
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-accent);
+  transition: 0.4s;
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+}
+
+/* =============================================
+   4. Layout & View Container
+   ============================================= */
+.view-container {
+  padding: 1rem;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.view-container h1 {
+  color: var(--color-heading);
+  border-bottom: 2px solid var(--color-accent);
+  padding-bottom: 0.5rem;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+/* =============================================
+   5. Formulieren
+   ============================================= */
+.auth-form {
+  max-width: 450px;
+  margin: 2rem auto;
+  padding: 2.5rem;
+  background-color: var(--color-background-soft);
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+}
+
+.auth-form h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-soft);
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-background-mute);
+  color: var(--color-text);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(196, 30, 30, 0.3);
+}
+
+button[type='submit'] {
+  width: 100%;
+  padding: 0.85rem;
+  border-radius: 4px;
+  border: none;
+  background-color: var(--color-accent);
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 1rem;
+}
+
+button[type='submit']:hover {
+  background-color: var(--color-accent-hover);
+}
+
+.error-message {
+  color: var(--color-error);
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.success-message {
+  color: var(--color-success);
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* =============================================
+   6. Specifieke Component Stijlen (Voorheen VKM.css)
+   ============================================= */
+.hero-container {
+  background-color: var(--color-background-soft);
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  margin: 20px 0;
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+
+.hero-container:hover {
+  border-color: var(--color-accent);
+}
+
+.course-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 1rem;
+}
+
+.course-description {
+  color: var(--color-text-soft);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.favorite-button {
+  padding: 8px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--color-text-soft);
+  transition: color 0.3s;
+}
+
+.favorite-button:hover {
+  color: var(--color-accent-hover);
+}
+
+/* Fallback voor --color-heading als het niet gedefinieerd is */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-heading, #ffffff);
+}
