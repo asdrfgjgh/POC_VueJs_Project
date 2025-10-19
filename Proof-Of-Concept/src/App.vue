@@ -25,9 +25,9 @@ function closeDropdown() {
 
 <template>
   <div id="app-background" @click="closeDropdown"></div>
-  <header>
-    <div class="wrapper">
-      <nav>
+  <header class="app-header">
+    <div class="header-content">
+      <nav class="main-nav">
         <div class="nav-left">
           <RouterLink to="/">Home</RouterLink>
           <RouterLink to="/modules">Modules</RouterLink>
@@ -89,15 +89,40 @@ function closeDropdown() {
   clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
 }
 
+.app-header {
+  background-color: #e60000; /* Placeholder voor Avans rode kleur */
+  color: white;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 60px; /* Vaste hoogte voor de topbalk */
+  width: 100%;
+  position: fixed; /* Zorgt dat de topbalk bovenaan blijft */
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.header-content {
+  width: 100%;
+  max-width: 1200px; /* Maximale breedte van de inhoud */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* De rest van je bestaande header en nav styling kan hieronder aangepast worden */
 header {
   padding-bottom: 2rem;
   border-bottom: 1px solid var(--color-border);
   margin-bottom: 2rem;
 }
 
-nav {
+nav.main-nav {
   width: 100%;
-  margin-top: 1rem;
+  margin-top: 0; /* Verwijder de margin-top die eerder op nav stond */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -109,10 +134,10 @@ nav {
   gap: 0.75rem;
 }
 
-nav a {
+nav.main-nav a {
   display: inline-block;
   padding: 0.5rem 1rem;
-  color: var(--color-text-soft);
+  color: white; /* Tekstkleur voor de topbalk links */
   font-size: 1rem;
   font-weight: 500;
   border-bottom: 2px solid transparent;
@@ -120,30 +145,30 @@ nav a {
   text-decoration: none;
 }
 
-nav a:hover {
-  color: var(--color-text);
-  border-bottom-color: var(--color-accent-hover);
+nav.main-nav a:hover {
+  color: #f0f0f0; /* Lichtere kleur bij hover */
+  border-bottom-color: #f0f0f0;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-accent);
-  border-bottom-color: var(--color-accent);
+nav.main-nav a.router-link-exact-active {
+  color: white; /* Actieve link wit */
+  border-bottom-color: white; /* Witte onderstreping voor actieve link */
 }
 
 .logout-button {
   cursor: pointer;
   padding: 0.5rem 1rem;
-  color: var(--color-text-soft);
+  color: white; /* Tekstkleur voor de uitlogknop */
   border-bottom: 2px solid transparent;
 }
 
 .logout-button:hover {
-  color: var(--color-text);
-  border-bottom-color: var(--color-accent-hover);
+  color: #f0f0f0;
+  border-bottom-color: #f0f0f0;
 }
 
 .welcome-message {
-  color: var(--color-text);
+  color: white; /* Tekstkleur voor de welkomstboodschap */
   padding: 0.5rem 0.5rem 0.5rem 1rem;
 }
 

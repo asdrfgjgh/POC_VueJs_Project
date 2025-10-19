@@ -9,19 +9,19 @@
     Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 
   /* Kleurenschema */
-  --color-background: #1a1a1a;
-  --color-background-soft: #242424;
-  --color-background-mute: #2e2e2e;
+  --color-background: #f0f2f5; /* Zeer lichtgrijs */
+  --color-background-soft: #ffffff; /* Wit */
+  --color-background-mute: #e0e2e5; /* Lichtgrijs */
 
-  --color-text: #ffffff;
-  --color-text-soft: rgba(235, 235, 235, 0.64);
-  --color-heading: #ffffff;
+  --color-text: #333333; /* Donkergrijs voor tekst */
+  --color-text-soft: #555555; /* Zachtere donkergrijs */
+  --color-heading: #1a1a1a; /* Nog donkerder grijs voor koppen */
 
-  --color-accent: #c41e1e;
-  --color-accent-hover: #dc4e4e;
+  --color-accent: #e60000; /* Avans rood */
+  --color-accent-hover: #ff3333; /* Lichtere Avans rood */
 
-  --color-border: #444;
-  --color-border-hover: #666;
+  --color-border: #cccccc; /* Lichtgrijze rand */
+  --color-border-hover: #999999; /* Iets donkerder grijs bij hover */
 
   --color-error: #ff6b6b;
   --color-success: #51cf66;

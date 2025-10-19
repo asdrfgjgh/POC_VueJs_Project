@@ -63,7 +63,7 @@ function handleCardClick() {
         <h2 class="course-title">
           {{ module.name }}
           <button class="favorite-button" @click.stop="handleFavoriteClick">
-            <span>{{ isFavorite ? '❤️' : '♡' }}</span>
+            <span>{{ isFavorite ? '⭐' : '☆' }}</span>
           </button>
         </h2>
         <p class="course-description">{{ module.description }}</p>
@@ -86,6 +86,7 @@ function handleCardClick() {
   align-items: stretch;
   border-radius: 8px;
   overflow: hidden;
+  min-height: 250px; /* Maak de kaart langer */
 }
 
 .clickable-card {
@@ -99,7 +100,7 @@ function handleCardClick() {
 }
 
 .hero-image {
-  flex: 0 0 180px;
+  flex: 0 0 250px; /* Geef de afbeelding meer ruimte */
 }
 
 .hero-image img {
