@@ -1,48 +1,59 @@
-name: Build and deploy Backend to Azure Web App - jobbahub-backend
+name: Build and deploy Backend to Azure Web App - ApiJobbahub
 
 on:
   push:
     branches:
-      - main
+      - main # Start deze pipeline wanneer er code naar 'main' wordt gepusht
     paths:
-      - 'backend/**' # Start de workflow alleen als er iets in de /backend map verandert
-  workflow_dispatch:
+      - "backend/**" # Alleen uitvoeren als bestanden in de backend map wijzigen
+  workflow_dispatch: # Maakt handmatige uitvoering mogelijk
+
+env:
+  AZURE_WEBAPP_NAME: ApiJobbahub
+  AZURE_RESOURCE_GROUP: "JobbaHub-RG" # VERVANG DIT DOOR DE JUISTE RESOURCE GROEP NAAM
+  # ARTIFACT_PATH is verwijderd omdat we de map direct deployen
 
 jobs:
-  build-and-deploy:
+  build_and_deploy:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write # Dit is nodig om in te loggen op Azure
-      contents: read   # Dit is nodig om je code te kunnen 'checken'
+      id-token: write # Dit is nodig om in te loggen op Azure via OpenID Connect
+      contents: read # Dit is nodig om je code te kunnen 'checken'
 
     steps:
-      - name: Checkout repository
+      # 1. Checkout de code
+      - name: Checkout code
         uses: actions/checkout@v4
 
+      # 2. Setup Node.js (Vervangt de 'Setup CLI' stap)
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
+          node-version: "20.x"
 
+      # 3. Build stap (Aangepast voor Node.js/Backend)
       - name: Install dependencies and build
-        # 👇 CORRECTIE 1: Voer deze commando's uit in de /backend map
+        # De working-directory zorgt ervoor dat de commando's in de juiste map worden uitgevoerd.
         working-directory: ./backend
         run: |
           npm install
           npm run build --if-present
 
+      # 4. Azure Login (OpenID Connect - Vervangt de Service Principal login)
       - name: Login to Azure
         uses: azure/login@v2
         with:
+          # Dit zijn de geheimen die GitHub automatisch aanmaakt bij het opzetten van OIDC.
+          # U moet de Federated Credential in Azure AD koppelen aan deze geheimen.
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_80C4FC1F8A4B4AADBD25E5BB71775260 }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_D6AA021A01B24641AF3C6A9780A2A1F5 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_A72AEEFC14A64338BC8A62E701B3A723 }}
 
-      - name: 'Deploy to Azure Web App'
+      # 5. Deploy naar Azure Web App (Vervangt de az webapp deployment en logout)
+      - name: "Deploy to Azure Web App"
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'jobbahub-backend'
-          slot-name: 'Production'
-          # 👇 CORRECTIE 2: Vertel Azure om alleen de /backend map te deployen
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          slot-name: "Production"
+          # De package is de map die de gebouwde applicatie bevat
           package: ./backend
-
