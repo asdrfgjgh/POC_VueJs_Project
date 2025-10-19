@@ -38,7 +38,7 @@ jobs:
           # Gebruik de Subscription ID uit GitHub Secrets
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           # OIDC vertrouwensrelatie wordt automatisch gebruikt
-          # client-id en tenant-id zijn NIET MEER nodig
+          # client-id en tenant-id zijn NIET MEER nodig omdat we OIDC gebruiken
 
       # Zorg ervoor dat de App Service Opstartopdracht is ingesteld op "npm start"
       # De 'package' wijst naar de /backend map om de inhoud te uploaden naar wwwroot
