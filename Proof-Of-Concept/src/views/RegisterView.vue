@@ -2,9 +2,11 @@
 import { ref } from 'vue';
 import { useUserStore } from '@/stores/userStore';
 import { useRouter } from 'vue-router';
+import { useLocale } from '@/locale'; // Import useLocale
 
 const userStore = useUserStore();
 const router = useRouter();
+const { t } = useLocale(); // Gebruik de useLocale composable
 
 const name = ref('');
 const email = ref('');
@@ -17,7 +19,7 @@ async function handleRegister() {
     await userStore.register(name.value, email.value, password.value);
     router.push('/login');
   } catch (err: any) {
-    error.value = err.message || 'Registratie mislukt. Probeer het opnieuw.';
+    error.value = err.message || t('registerFailed');
   }
 }
 </script>
@@ -25,21 +27,21 @@ async function handleRegister() {
 <template>
   <div class="view-container">
     <div class="auth-form">
-      <h2>Registreren</h2>
+      <h2>{{ t('registerTitle') }}</h2>
       <form @submit.prevent="handleRegister">
         <div class="form-group">
-          <label for="name">Naam</label>
+          <label for="name">{{ t('nameLabel') }}</label>
           <input id="name" v-model="name" type="text" required />
         </div>
         <div class="form-group">
-          <label for="email">E-mail</label>
+          <label for="email">{{ t('emailLabel') }}</label>
           <input id="email" v-model="email" type="email" required />
         </div>
         <div class="form-group">
-          <label for="password">Wachtwoord</label>
+          <label for="password">{{ t('passwordLabel') }}</label>
           <input id="password" v-model="password" type="password" required />
         </div>
-        <button type="submit">Registreren</button>
+        <button type="submit">{{ t('registerButton') }}</button>
         <p v-if="error" class="error-message">{{ error }}</p>
       </form>
     </div>

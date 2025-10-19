@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useLocale } from '@/locale';
+
 const props = defineProps<{
   currentPage: number;
   totalPages: number;
@@ -7,6 +9,8 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'pageChange', page: number): void
 }>();
+
+const { t } = useLocale();
 
 function goToPage(page: number) {
   if (page > 0 && page <= props.totalPages) {
@@ -19,21 +23,21 @@ function goToPage(page: number) {
 <template>
   <div class="pagination-controls" v-if="totalPages > 1">
     <button @click="goToPage(1)" :disabled="currentPage === 1">
-      &laquo; Eerste
+      {{ t('paginationFirst') }}
     </button>
     <button @click="goToPage(currentPage - 1)" :disabled="currentPage === 1">
-      &lsaquo; Vorige
+      {{ t('paginationPrevious') }}
     </button>
 
         <span class="page-info">
-      Pagina {{ currentPage }} van {{ totalPages }}
+      {{ t('paginationPage') }} {{ currentPage }} {{ t('paginationOf') }} {{ totalPages }}
     </span>
 
     <button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages">
-      Volgende &rsaquo;
+      {{ t('paginationNext') }}
     </button>
     <button @click="goToPage(totalPages)" :disabled="currentPage === totalPages">
-      Laatste &raquo;
+      {{ t('paginationLast') }}
     </button>
   </div>
 </template>

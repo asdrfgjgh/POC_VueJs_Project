@@ -8,6 +8,7 @@ import TagFilter from '../components/TagFilter.vue';
 import PaginationControls from '../components/PaginationControls.vue';
 import type { IChoiceModule } from '../types';
 import ModuleDetail from '@/components/ModuleDetail.vue';
+import { useLocale } from '@/locale'; // Import useLocale
 
 const selectedModule = ref<IChoiceModule | null>(null);
 const userStore = useUserStore();
@@ -86,6 +87,8 @@ const handleTagsUpdated = (tags: string[]) => {
 const onPageChange = (page: number) => {
   currentPage.value = page;
 };
+
+const { t } = useLocale(); // Gebruik de useLocale composable
 </script>
 
 <template>
@@ -95,9 +98,9 @@ const onPageChange = (page: number) => {
 
     <div class="filters">
       <div class="filter-item">
-        <label for="level-filter">Niveau</label>
+        <label for="level-filter">{{ t('levelFilter') }}</label>
         <select id="level-filter" v-model="selectedLevel">
-          <option value="">Alle Niveaus</option>
+          <option value="">{{ t('allLevels') }}</option>
           <option v-for="level in levels" :key="level" :value="level">
             {{ level }}
           </option>
@@ -105,9 +108,9 @@ const onPageChange = (page: number) => {
       </div>
 
       <div class="filter-item">
-        <label for="location-filter">Locatie</label>
+        <label for="location-filter">{{ t('locationFilter') }}</label>
         <select id="location-filter" v-model="selectedLocation">
-          <option value="">Alle Locaties</option>
+          <option value="">{{ t('allLocations') }}</option>
           <option v-for="location in locations" :key="location" :value="location">
             {{ location }}
           </option>
@@ -115,9 +118,9 @@ const onPageChange = (page: number) => {
       </div>
 
       <div class="filter-item">
-        <label for="credits-filter">Studiecredits</label>
+        <label for="credits-filter">{{ t('studyCreditsFilter') }}</label>
         <select id="credits-filter" v-model.number="selectedStudyCredits">
-          <option :value="null">Alle Studiecredits</option>
+          <option :value="null">{{ t('allStudyCredits') }}</option>
           <option v-for="credit in studyCredits" :key="credit" :value="credit">
             {{ credit }}
           </option>
@@ -170,7 +173,7 @@ const onPageChange = (page: number) => {
   margin-bottom: 8px;
   font-weight: bold;
   font-size: 1em;
-  color: #ffffff; /* Donkergrijs voor tekst */
+  color: #000000; /* Donkergrijs voor tekst */
 }
 
 .filter-item select {

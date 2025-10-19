@@ -7,11 +7,13 @@ import ModuleCard from './ModuleCard.vue';
 import { useUserStore } from '../stores/userStore';
 import { storeToRefs } from 'pinia';
 import ModuleDetail from '@/components/ModuleDetail.vue'; 
+import { useLocale } from '@/locale'; // Import useLocale
 
 
 const selectedModule = ref<IChoiceModule | null>(null); 
 const userStore = useUserStore();
 const { user } = storeToRefs(userStore);
+const { t } = useLocale(); // Gebruik de useLocale composable
 
 const props = defineProps({
   shortlistedModules: {
@@ -115,7 +117,7 @@ watch(
 
 <template>
   <div v-if="recommendations.length > 0" class="recommendations-container">
-    <h2>Aanbevolen Modules</h2>
+    <h2>{{ t('recommendedModulesTitle') }}</h2>
     
       <ModuleCard
       v-for="module in recommendations"

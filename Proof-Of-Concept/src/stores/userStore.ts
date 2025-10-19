@@ -8,6 +8,7 @@ import type { IStudent, IChoiceModule } from '@/types';
 export const useUserStore = defineStore('student', () => {
   const user = ref<IStudent | null>(null);
   const token = ref<string | null>(localStorage.getItem('token'));
+  const currentLanguage = ref<string>(localStorage.getItem('language') || 'NL'); // Standaardtaal
 
   const isAuthenticated = computed(() => !!token.value && !!user.value);
 
@@ -18,6 +19,11 @@ export const useUserStore = defineStore('student', () => {
 
   function setUser(newUser: IStudent) {
     user.value = newUser;
+  }
+
+  function setLanguage(lang: string) {
+    currentLanguage.value = lang;
+    localStorage.setItem('language', lang);
   }
 
   function clearAuth() {
@@ -84,6 +90,8 @@ export const useUserStore = defineStore('student', () => {
     register,
     logout,
     toggleShortlist,
-    updateProfile
+    updateProfile,
+    currentLanguage,
+    setLanguage
   };
 });

@@ -2,9 +2,11 @@
 import { ref } from 'vue';
 import { useUserStore } from '@/stores/userStore';
 import { useRouter } from 'vue-router';
+import { useLocale } from '@/locale'; // Import useLocale
 
 const userStore = useUserStore();
 const router = useRouter();
+const { t } = useLocale(); // Gebruik de useLocale composable
 
 const email = ref('');
 const password = ref('');
@@ -16,7 +18,7 @@ async function handleLogin() {
     await userStore.login(email.value, password.value);
     router.push('/'); // Stuur gebruiker naar de homepagina na inloggen
   } catch (err: any) {
-    error.value = err.message || 'Inloggen mislukt. Controleer je gegevens.';
+    error.value = err.message || t('loginFailed');
   }
 }
 </script>
@@ -24,17 +26,17 @@ async function handleLogin() {
 <template>
   <div class="view-container">
     <div class="auth-form">
-      <h2>Inloggen</h2>
+      <h2>{{ t('loginTitle') }}</h2>
       <form @submit.prevent="handleLogin">
         <div class="form-group">
-          <label for="email">E-mail</label>
+          <label for="email">{{ t('emailLabel') }}</label>
           <input id="email" v-model="email" type="email" required />
         </div>
         <div class="form-group">
-          <label for="password">Wachtwoord</label>
+          <label for="password">{{ t('passwordLabel') }}</label>
           <input id="password" v-model="password" type="password" required />
         </div>
-        <button type="submit">Inloggen</button>
+        <button type="submit">{{ t('loginButton') }}</button>
         <p v-if="error" class="error-message">{{ error }}</p>
       </form>
     </div>

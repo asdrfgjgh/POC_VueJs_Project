@@ -3,6 +3,7 @@ import { computed } from 'vue';
 import { useUserStore } from '@/stores/userStore';
 import { storeToRefs } from 'pinia';
 import type { IChoiceModule } from '@/types';
+import { useLocale } from '@/locale'; // Import useLocale
 
 // Defineert de events die dit component kan uitzenden
 const emit = defineEmits(['view-details']);
@@ -10,6 +11,7 @@ const emit = defineEmits(['view-details']);
 const userStore = useUserStore();
 // 👇 CORRECTIE 1: 'selectedUser' is nu 'user'
 const { user } = storeToRefs(userStore);
+const { t } = useLocale(); // Gebruik de useLocale composable
 
 const props = defineProps<{
   module: IChoiceModule;
@@ -56,7 +58,7 @@ function handleCardClick() {
 <template>
   <div class="hero-container clickable-card" @click="handleCardClick">
     <div class="hero-image">
-      <img :src="getImageUrl(module._id)" :alt="'Afbeelding voor ' + module.name" />
+      <img :src="getImageUrl(module._id)" :alt="t('imageAltText') + module.name" />
     </div>
     <div class="hero-content">
       <div class="course-info">
@@ -67,7 +69,7 @@ function handleCardClick() {
           </button>
         </h2>
         <p class="course-description">{{ module.description }}</p>
-        <p><strong>Studiepunten:</strong> {{ module.studycredit }} ECTS</p>
+        <p><strong>{{ t('studyPointsLabel') }}</strong> {{ module.studycredit }} ECTS</p>
       </div>
 
       <div class="tags-container" v-if="module.tags && module.tags.length > 0">

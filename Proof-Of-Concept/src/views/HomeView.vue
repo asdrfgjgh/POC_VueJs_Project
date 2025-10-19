@@ -1,7 +1,13 @@
+<script setup lang="ts">
+import { useLocale } from '@/locale';
+
+const { t } = useLocale();
+</script>
+
 <template>
   <main class="view-container">
-    <h1>Welkom bij de Keuzemodule Applicatie Jobbahub</h1>
-    <p>Gebruik de navigatie hierboven om de modules te bekijken</p>
+    <h1>{{ t('homeWelcomeTitle') }}</h1>
+    <p>{{ t('homeWelcomeText') }}</p>
   </main>
 </template>
 

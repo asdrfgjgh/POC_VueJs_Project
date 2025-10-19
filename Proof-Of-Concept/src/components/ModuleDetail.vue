@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useUserStore } from '@/stores/userStore';
+import { useLocale } from '@/locale'; // Import useLocale
 import type { IChoiceModule } from '@/types';
 import { storeToRefs } from 'pinia'; // Importeer storeToRefs
 
@@ -14,6 +15,8 @@ const props = defineProps<{
 
 // Defineert een 'close' event dat we kunnen aanroepen om de weergave te sluiten
 const emit = defineEmits(['close']);
+
+const { t } = useLocale(); // Gebruik de useLocale composable
 
 const isFavorite = computed(() => {
   // 👇 CORRECTIE: Gebruik optional chaining (?.) om veilig de property te benaderen.
@@ -38,7 +41,7 @@ function handleClose() {
       <div class="modal-header">
         <h2 class="module-title">{{ module.name }}</h2>
         <button class="favorite-button" @click="handleFavoriteClick">
-          <span>{{ isFavorite ? '❤️' : '♡' }}</span>
+          <span>{{ isFavorite ? '⭐' : '☆' }}</span>
         </button>
         <button class="close-button" @click="handleClose">×</button>
       </div>
@@ -46,23 +49,23 @@ function handleClose() {
       <div class="modal-body">
         
         <div class="details-grid">
-          <div><strong>Studiepunten:</strong> {{ module.studycredit }} ECTS</div>
-          <div><strong>Locatie:</strong> {{ module.location || 'Niet gespecificeerd' }}</div>
-          <div><strong>Niveau:</strong> {{ module.level || 'Niet gespecificeerd' }}</div>
+          <div><strong>{{ t('studyPoints') }}:</strong> {{ module.studycredit }} ECTS</div>
+          <div><strong>{{ t('location') }}:</strong> {{ module.location || t('notSpecified') }}</div>
+          <div><strong>{{ t('level') }}:</strong> {{ module.level || t('notSpecified') }}</div>
         </div>
 
         <div v-if="module.content" class="module-section">
-          <h3>Inhoud</h3>
+          <h3>{{ t('content') }}</h3>
           <p>{{ module.content }}</p>
         </div>
 
         <div v-if="module.learningoutcomes" class="module-section">
-          <h3>Leeruitkomsten</h3>
+          <h3>{{ t('learningOutcomes') }}</h3>
           <p>{{ module.learningoutcomes }}</p>
         </div>
 
         <div class="tags-container" v-if="module.tags && module.tags.length > 0">
-          <h3>Tags</h3>
+          <h3>{{ t('tags') }}</h3>
           <span v-for="tag in module.tags" :key="tag._id" class="tag">
             {{ tag.name }}
           </span>

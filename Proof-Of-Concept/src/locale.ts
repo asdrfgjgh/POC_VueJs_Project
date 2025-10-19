@@ -1,0 +1,251 @@
+import { computed } from 'vue';
+import { useUserStore } from '@/stores/userStore';
+
+interface Translations {
+  [key: string]: { 
+    [lang: string]: string;
+  };
+}
+
+const translations: Translations = {
+  home: {
+    NL: 'Home',
+    EN: 'Home',
+  },
+  modules: {
+    NL: 'Modules',
+    EN: 'Modules',
+  },
+  myTags: {
+    NL: 'Mijn Tags',
+    EN: 'My Tags',
+  },
+  login: {
+    NL: 'Inloggen',
+    EN: 'Login',
+  },
+  register: {
+    NL: 'Registreren',
+    EN: 'Register',
+  },
+  welcome: {
+    NL: 'Welkom',
+    EN: 'Welcome',
+  },
+  profileEdit: {
+    NL: 'Profiel Bewerken',
+    EN: 'Edit Profile',
+  },
+  myFavorites: {
+    NL: 'Mijn Favorieten',
+    EN: 'My Favorites',
+  },
+  logout: {
+    NL: 'Uitloggen',
+    EN: 'Logout',
+  },
+  studyPoints: {
+    NL: 'Studiepunten',
+    EN: 'Study Credits',
+  },
+  location: {
+    NL: 'Locatie',
+    EN: 'Location',
+  },
+  notSpecified: {
+    NL: 'Niet gespecificeerd',
+    EN: 'Not specified',
+  },
+  level: {
+    NL: 'Niveau',
+    EN: 'Level',
+  },
+  content: {
+    NL: 'Inhoud',
+    EN: 'Content',
+  },
+  learningOutcomes: {
+    NL: 'Leeruitkomsten',
+    EN: 'Learning Outcomes',
+  },
+  tags: {
+    NL: 'Tags',
+    EN: 'Tags',
+  },
+  // New translations for ModulesView filters
+  levelFilter: {
+    NL: 'Niveau',
+    EN: 'Level',
+  },
+  locationFilter: {
+    NL: 'Locatie',
+    EN: 'Location',
+  },
+  studyCreditsFilter: {
+    NL: 'Studiecredits',
+    EN: 'Study Credits',
+  },
+  allLevels: {
+    NL: 'Alle Niveaus',
+    EN: 'All Levels',
+  },
+  allLocations: {
+    NL: 'Alle Locaties',
+    EN: 'All Locations',
+  },
+  allStudyCredits: {
+    NL: 'Alle Studiecredits',
+    EN: 'All Study Credits',
+  },
+  homeWelcomeTitle: {
+    NL: 'Welkom bij de Keuzemodule Applicatie Jobbahub',
+    EN: 'Welcome to the Elective Module Application Jobbahub',
+  },
+  homeWelcomeText: {
+    NL: 'Gebruik de navigatie hierboven om de modules te bekijken',
+    EN: 'Use the navigation above to view the modules',
+  },
+  imageAltText: {
+    NL: 'Afbeelding voor ',
+    EN: 'Image for ',
+  },
+  studyPointsLabel: {
+    NL: 'Studiepunten:',
+    EN: 'Study Credits:',
+  },
+  recommendedModulesTitle: {
+    NL: 'Aanbevolen Modules',
+    EN: 'Recommended Modules',
+  },
+  paginationFirst: {
+    NL: '« Eerste',
+    EN: '« First',
+  },
+  paginationPrevious: {
+    NL: '‹ Vorige',
+    EN: '‹ Previous',
+  },
+  paginationPage: {
+    NL: 'Pagina',
+    EN: 'Page',
+  },
+  paginationOf: {
+    NL: 'van',
+    EN: 'of',
+  },
+  paginationNext: {
+    NL: 'Volgende ›',
+    EN: 'Next ›',
+  },
+  paginationLast: {
+    NL: 'Laatste »',
+    EN: 'Last »',
+  },
+  filterByTags: {
+    NL: 'Filter op tags:',
+    EN: 'Filter by tags:',
+  },
+  loginTitle: {
+    NL: 'Inloggen',
+    EN: 'Login',
+  },
+  emailLabel: {
+    NL: 'E-mail',
+    EN: 'Email',
+  },
+  passwordLabel: {
+    NL: 'Wachtwoord',
+    EN: 'Password',
+  },
+  loginButton: {
+    NL: 'Inloggen',
+    EN: 'Login',
+  },
+  loginFailed: {
+    NL: 'Inloggen mislukt. Controleer je gegevens.',
+    EN: 'Login failed. Check your credentials.',
+  },
+  profileEditTitle: {
+    NL: 'Profiel Bewerken',
+    EN: 'Edit Profile',
+  },
+  nameLabel: {
+    NL: 'Naam',
+    EN: 'Name',
+  },
+  saveButton: {
+    NL: 'Opslaan',
+    EN: 'Save',
+  },
+  profileUpdateSuccess: {
+    NL: 'Profiel succesvol bijgewerkt!',
+    EN: 'Profile updated successfully!',
+  },
+  profileUpdateFailed: {
+    NL: 'Het bijwerken van het profiel is mislukt.',
+    EN: 'Failed to update profile.',
+  },
+  registerTitle: {
+    NL: 'Registreren',
+    EN: 'Register',
+  },
+  registerButton: {
+    NL: 'Registreren',
+    EN: 'Register',
+  },
+  registerFailed: {
+    NL: 'Registratie mislukt. Probeer het opnieuw.',
+    EN: 'Registration failed. Please try again.',
+  },
+  tagPopularityTitle: {
+    NL: 'Tag Populariteit',
+    EN: 'Tag Popularity',
+  },
+  forLabel: {
+    NL: 'voor',
+    EN: 'for',
+  },
+  loadingData: {
+    NL: 'Data aan het laden...',
+    EN: 'Loading data...',
+  },
+  loginToViewStats: {
+    NL: 'Log in om uw statistieken te bekijken.',
+    EN: 'Login to view your statistics.',
+  },
+  noFavoriteModules: {
+    NL: 'Je hebt nog geen favoriete modules.',
+    EN: 'You have no favorite modules yet.',
+  },
+  goToModulesPage: {
+    NL: 'Ga naar de modulepagina om modules aan je favorietenlijst toe te voegen.',
+    EN: 'Go to the modules page to add modules to your favorites list.',
+  },
+  legend: {
+    NL: 'Legenda',
+    EN: 'Legend',
+  },
+  myFavoritesTitle: {
+    NL: 'Mijn Favorieten',
+    EN: 'My Favorites',
+  },
+  noFavoritesText: {
+    NL: 'Je hebt nog geen modules aan je favorieten toegevoegd.',
+    EN: 'You have not added any modules to your favorites yet.',
+  },
+};
+
+export function useLocale() {
+  const userStore = useUserStore();
+  const currentLanguage = computed(() => userStore.currentLanguage);
+
+  const t = (key: string): string => {
+    const translation = translations[key];
+    if (translation) {
+      return translation[currentLanguage.value] || key; 
+    }
+    return key; 
+  };
+
+  return { t, currentLanguage };
+}

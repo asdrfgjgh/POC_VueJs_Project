@@ -2,9 +2,11 @@
 import { ref, onMounted } from 'vue';
 import { useUserStore } from '@/stores/userStore';
 import { useRouter } from 'vue-router';
+import { useLocale } from '@/locale'; // Import useLocale
 
 const userStore = useUserStore();
 const router = useRouter();
+const { t } = useLocale(); // Gebruik de useLocale composable
 
 // Maak refs voor de formuliervelden
 const name = ref('');
@@ -25,13 +27,13 @@ async function handleProfileUpdate() {
   successMessage.value = null;
   try {
     await userStore.updateProfile({ name: name.value, email: email.value });
-    successMessage.value = 'Profiel succesvol bijgewerkt!';
+    successMessage.value = t('profileUpdateSuccess');
     // Optioneel: stuur de gebruiker na een paar seconden weg
     setTimeout(() => {
       router.push('/');
     }, 2000);
   } catch (err: any) {
-    error.value = err.message || 'Het bijwerken van het profiel is mislukt.';
+    error.value = err.message || t('profileUpdateFailed');
   }
 }
 </script>
@@ -39,17 +41,17 @@ async function handleProfileUpdate() {
 <template>
   <div class="view-container">
     <div class="auth-form">
-      <h2>Profiel Bewerken</h2>
+      <h2>{{ t('profileEditTitle') }}</h2>
       <form @submit.prevent="handleProfileUpdate">
         <div class="form-group">
-          <label for="name">Naam</label>
+          <label for="name">{{ t('nameLabel') }}</label>
           <input id="name" v-model="name" type="text" required />
         </div>
         <div class="form-group">
-          <label for="email">E-mail</label>
+          <label for="email">{{ t('emailLabel') }}</label>
           <input id="email" v-model="email" type="email" required />
         </div>
-        <button type="submit">Opslaan</button>
+        <button type="submit">{{ t('saveButton') }}</button>
         <p v-if="error" class="error-message">{{ error }}</p>
         <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
       </form>

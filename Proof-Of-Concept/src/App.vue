@@ -2,11 +2,13 @@
 import { ref } from 'vue';
 import { RouterLink, RouterView, useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/userStore';
+import { useLocale } from '@/locale'; // Import useLocale
 import { storeToRefs } from 'pinia';
 
 const userStore = useUserStore();
-const { isAuthenticated, user } = storeToRefs(userStore);
+const { isAuthenticated, user, currentLanguage } = storeToRefs(userStore); // Voeg currentLanguage toe
 const router = useRouter();
+const { t } = useLocale(); // Gebruik de useLocale composable
 
 // Nieuwe state om de zichtbaarheid van de dropdown te beheren
 const isDropdownOpen = ref(false);
@@ -21,6 +23,10 @@ function handleLogout() {
 function closeDropdown() {
   isDropdownOpen.value = false;
 }
+
+function setLanguage(lang: string) {
+  userStore.setLanguage(lang);
+}
 </script>
 
 <template>
@@ -29,18 +35,18 @@ function closeDropdown() {
     <div class="header-content">
       <nav class="main-nav">
         <div class="nav-left">
-          <RouterLink to="/">Home</RouterLink>
-          <RouterLink to="/modules">Modules</RouterLink>
-          <RouterLink v-if="isAuthenticated" to="/user-tags">Mijn Tags</RouterLink>
+          <RouterLink to="/">{{ t('home') }}</RouterLink>
+          <RouterLink to="/modules">{{ t('modules') }}</RouterLink>
+          <RouterLink v-if="isAuthenticated" to="/user-tags">{{ t('myTags') }}</RouterLink>
         </div>
 
         <div class="nav-right">
           <template v-if="!isAuthenticated">
-            <RouterLink to="/login">Inloggen</RouterLink>
-            <RouterLink to="/register">Registreren</RouterLink>
+            <RouterLink to="/login">{{ t('login') }}</RouterLink>
+            <RouterLink to="/register">{{ t('register') }}</RouterLink>
           </template>
           <template v-else>
-            <span class="welcome-message">Welkom, {{ user?.name }}</span>
+            <span class="welcome-message">{{ t('welcome') }}, {{ user?.name }}</span>
             
             <div class="profile-dropdown">
               <button @click.stop="isDropdownOpen = !isDropdownOpen" class="profile-link" title="Profiel">
@@ -49,12 +55,16 @@ function closeDropdown() {
                  </svg>
               </button>
               <div v-if="isDropdownOpen" class="dropdown-menu">
-  <RouterLink to="/profile" @click="closeDropdown">Profiel Bewerken</RouterLink>
-  <RouterLink to="/favorites" @click="closeDropdown">Mijn Favorieten</RouterLink>
-  <a @click="handleLogout" class="logout-button">Uitloggen</a>
+  <RouterLink to="/profile" @click="closeDropdown">{{ t('profileEdit') }}</RouterLink>
+  <RouterLink to="/favorites" @click="closeDropdown">{{ t('myFavorites') }}</RouterLink>
+  <a @click="handleLogout" class="logout-button">{{ t('logout') }}</a>
 </div>
             </div>
           </template>
+          <div class="language-switcher">
+            <span :class="{ active: currentLanguage === 'NL' }" @click.stop="setLanguage('NL')">NL</span> |
+            <span :class="{ active: currentLanguage === 'EN' }" @click.stop="setLanguage('EN')">EN</span>
+          </div>
         </div>
       </nav>
     </div>
@@ -231,5 +241,26 @@ nav.main-nav a.router-link-exact-active {
   border-bottom: none;
 }
 
+.language-switcher {
+  color: white;
+  margin-right: 1rem; /* Adjust as needed for spacing */
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.language-switcher span {
+  cursor: pointer;
+  padding: 0 0.25rem;
+  transition: color 0.3s;
+}
+
+.language-switcher span:hover {
+  color: #f0f0f0;
+}
+
+.language-switcher span.active {
+  font-weight: bold;
+  border-bottom: 2px solid white; /* Underline active language */
+}
 
 </style>

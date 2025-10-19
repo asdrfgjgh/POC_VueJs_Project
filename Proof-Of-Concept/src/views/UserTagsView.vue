@@ -7,11 +7,13 @@ import * as api from '../services/api';
 import type { ITag, IChoiceModule } from '../types';
 import PieChart from '../components/PieChart.vue';
 import ModuleRecommendations from '../components/ModuleRecommendations.vue';
+import { useLocale } from '@/locale'; // Import useLocale
 
 // Gebruik de user store
 const userStore = useUserStore();
 // 👇 CORRECTIE 1: 'selectedUser' is nu 'user'
 const { user } = storeToRefs(userStore);
+const { t } = useLocale(); // Gebruik de useLocale composable
 
 interface TagStat {
   _id: string;
@@ -98,22 +100,22 @@ const hasFavorites = computed(() => {
 <template>
   <div class="view-container user-tags-view">
     <h1>
-      Tag Populariteit<span v-if="user"> voor {{ user.name }}</span>
+      {{ t('tagPopularityTitle') }}<span v-if="user"> {{ t('forLabel') }} {{ user.name }}</span>
     </h1>
     <div v-if="isLoading" class="loading">
-      <span>Data aan het laden...</span>
+      <span>{{ t('loadingData') }}</span>
     </div>
     <div v-else-if="!user" class="no-user-selected">
-      <h2>Log in om uw statistieken te bekijken.</h2>
+      <h2>{{ t('loginToViewStats') }}</h2>
     </div>
     <div v-else-if="!hasFavorites" class="no-favorites">
-      <h2>Je hebt nog geen favoriete modules.</h2>
-      <p>Ga naar de modulepagina om modules aan je favorietenlijst toe te voegen.</p>
+      <h2>{{ t('noFavoriteModules') }}</h2>
+      <p>{{ t('goToModulesPage') }}</p>
     </div>
     <div v-else class="content-wrapper">
       <div class="dashboard-grid">
         <div class="legend-container">
-          <h2>Legenda</h2>
+          <h2>{{ t('legend') }}</h2>
           <ul class="tag-legend">
             <li v-for="tag in tagStats.filter(t => t.count > 0)" :key="tag._id">
               <span class="color-box" :style="{ backgroundColor: tag.color }"></span>

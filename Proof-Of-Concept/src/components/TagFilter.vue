@@ -3,12 +3,15 @@ import { ref, onMounted } from 'vue';
 import * as api from '../services/api';
 // CORRECTIE: Het type 'Tag' is aangepast naar 'ITag'
 import type { ITag } from '../types';
+import { useLocale } from '@/locale'; // Import useLocale
 
 // CORRECTIE: Het type 'Tag' is aangepast naar 'ITag'
 const tags = ref<ITag[]>([]);
 const selectedTags = ref<string[]>([]);
 
 const emit = defineEmits(['tags-updated']);
+
+const { t } = useLocale(); // Gebruik de useLocale composable
 
 onMounted(async () => {
   tags.value = await api.getAllTags();
@@ -21,7 +24,7 @@ const handleTagChange = () => {
 
 <template>
   <div class="filter-container">
-    <h4>Filter op tags:</h4>
+    <h4>{{ t('filterByTags') }}</h4>
     <div class="tags">
       <label v-for="tag in tags" :key="tag._id">
         <input
@@ -73,12 +76,12 @@ h4 {
   cursor: pointer;
   transition: all 0.2s ease;
   font-weight: 500;
-  color: var(--color-text-soft);
+  color: #000000; /* Changed from var(--color-text-soft) to black */
 }
 
 .tags label:hover {
   border-color: var(--color-accent);
-  color: var(--color-text);
+  color: #000000; /* Changed from var(--color-text) to black */
 }
 
 /* De standaard checkbox, maar dan mooier */

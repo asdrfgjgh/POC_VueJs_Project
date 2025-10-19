@@ -6,9 +6,11 @@ import ModuleCard from '@/components/ModuleCard.vue';
 import ModuleDetail from '@/components/ModuleDetail.vue';
 import PaginationControls from '@/components/PaginationControls.vue';
 import type { IChoiceModule } from '@/types';
+import { useLocale } from '@/locale'; // Import useLocale
 
 const userStore = useUserStore();
 const { user } = storeToRefs(userStore);
+const { t } = useLocale(); // Gebruik de useLocale composable
 
 // Paginering state
 const currentPage = ref(1);
@@ -49,7 +51,7 @@ function closeModuleDetails() {
 
 <template>
   <div class="view-container favorites-view">
-    <h1>Mijn Favorieten</h1>
+    <h1>{{ t('myFavoritesTitle') }}</h1>
     <div v-if="user && user.shortlisted_modules.length > 0" class="favorites-list">
       <ModuleCard
         v-for="module in paginatedFavorites"
@@ -64,7 +66,7 @@ function closeModuleDetails() {
       />
     </div>
     <div v-else class="no-favorites">
-      <p>Je hebt nog geen modules aan je favorieten toegevoegd.</p>
+      <p>{{ t('noFavoritesText') }}</p>
     </div>
   </div>
 
