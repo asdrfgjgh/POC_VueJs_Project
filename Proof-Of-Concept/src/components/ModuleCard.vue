@@ -54,13 +54,6 @@ function handleMoreInfoClick(event: Event) {
   event.stopPropagation(); // Stop de event bubbeling
   emit('view-details', props.module);
 }
-
-function handleOsirisClick(event: Event) {
-  event.stopPropagation(); // Stop de event bubbeling
-  // Implementeer hier de logica om naar Osiris te navigeren
-  // Bijvoorbeeld: window.open(props.module.osirisLink, '_blank');
-  alert('Aanmelden via Osiris is nog niet geïmplementeerd.'); // T-tijdelijke placeholder
-}
 </script>
 
 <template>
@@ -80,14 +73,13 @@ function handleOsirisClick(event: Event) {
       <p class="module-description">{{ module.description }}</p>
 
       <div class="tags-container" v-if="module.tags && module.tags.length > 0">
-        <span v-for="tag in module.tags" :key="tag._id" class="tag">
+        <span v-for="tag in module.tags" :key="tag._id" class="tag-enhanced">
           {{ tag.name }}
         </span>
       </div>
 
       <div class="card-actions">
         <button @click="handleMoreInfoClick" class="info-button">{{ t('moreInfoButton') }}</button>
-        <button @click="handleOsirisClick" class="osiris-button">{{ t('registerOsirisButton') }}</button>
       </div>
     </div>
   </div>
@@ -193,49 +185,44 @@ function handleOsirisClick(event: Event) {
   margin-bottom: 1rem;
 }
 
-.tag {
-  background-color: var(--color-accent);
-  color: var(--color-background);
-  padding: 0.25rem 0.75rem;
-  border-radius: 1rem;
-  font-size: 0.8rem;
+.tag-enhanced {
+  background-color: #f0f0f0; /* Light gray background */
+  color: #333; /* Darker text for better contrast */
+  padding: 0.4rem 0.9rem; /* Increased padding */
+  border-radius: 20px; /* More rounded, pill-like shape */
+  font-size: 0.85rem;
   font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08); /* Subtle shadow */
+  transition: all 0.2s ease;
+}
+
+.tag-enhanced:hover {
+  background-color: #e0e0e0; /* Slightly darker on hover */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12); /* Increased shadow on hover */
 }
 
 .card-actions {
   display: flex;
   gap: 10px;
   margin-top: 1rem;
+  justify-content: center;
 }
 
-.info-button,
-.osiris-button {
+.info-button {
   padding: 10px 15px;
   border-radius: 4px;
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  flex-grow: 1;
   text-align: center;
-}
-
-.info-button {
-  background-color: #e0e0e0; /* Lichtgrijs */
-  border: 1px solid #ccc;
-  color: #333;
-}
-
-.info-button:hover {
-  background-color: #cccccc;
-}
-
-.osiris-button {
+  width: calc(50% - 1.5rem); /* Half the width of the card's content area */
   background-color: #3e8ed0; /* Blauw */
   border: none;
   color: white;
 }
 
-.osiris-button:hover {
+.info-button:hover {
   background-color: #357ABD;
+  color: white;
 }
 </style>

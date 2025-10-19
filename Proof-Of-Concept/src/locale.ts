@@ -13,7 +13,7 @@ const translations: Translations = {
     EN: 'Home',
   },
   modules: {
-    NL: 'Modules',
+    NL: 'Keuzemodules',
     EN: 'Modules',
   },
   myTags: {
@@ -232,6 +232,18 @@ const translations: Translations = {
   goToModulesPage: {
     NL: 'Ga naar de modulepagina om modules aan je favorietenlijst toe te voegen.',
     EN: 'Go to the modules page to add modules to your favorites list.',
+  },
+  searchPlaceholder: {
+    NL: 'Zoek op titel of beschrijving...',
+    EN: 'Search by title or description...',
+  },
+  modulesFound: {
+    NL: 'keuzemodules gevonden.',
+    EN: 'modules found.',
+  },
+  moduleFound: {
+    NL: 'keuzemodule gevonden.',
+    EN: 'module found.',
   },
   legend: {
     NL: 'Legenda',

@@ -19,6 +19,7 @@ const selectedTags = ref<string[]>([]);
 const selectedLevel = ref<string>('');
 const selectedLocation = ref<string>('');
 const selectedStudyCredits = ref<number | null>(null);
+const searchQuery = ref<string>(''); // Nieuwe ref voor zoekterm
 
 // NIEUWE REFS VOOR FILTEROPTIES
 const levels = ref<string[]>([]);
@@ -49,7 +50,8 @@ const fetchModules = async () => {
     selectedTags.value,
     selectedLevel.value,
     selectedLocation.value,
-    selectedStudyCredits.value ?? undefined
+    selectedStudyCredits.value ?? undefined,
+    searchQuery.value // Voeg zoekterm toe aan API call
   );
   choiceModules.value = modules;
   totalItems.value = total;
@@ -71,7 +73,7 @@ onMounted(() => {
   fetchFilterOptions();
 });
 
-watch([selectedTags, selectedLevel, selectedLocation, selectedStudyCredits], () => {
+watch([selectedTags, selectedLevel, selectedLocation, selectedStudyCredits, searchQuery], () => {
   if (currentPage.value !== 1) {
     currentPage.value = 1;
   }
@@ -93,7 +95,20 @@ const { t } = useLocale(); // Gebruik de useLocale composable
 
 <template>
   <div class="view-container modules-view">
-    <h1>Keuzemodules</h1>
+    <h1>{{ t('modules') }}</h1>
+    <div class="search-controls">
+      <div class="search-bar">
+        <input
+          type="text"
+          v-model="searchQuery"
+          :placeholder="t('searchPlaceholder')"
+          class="search-input"
+        />
+      </div>
+      <div class="modules-found-message">
+        {{ totalItems }} {{ totalItems === 1 ? t('moduleFound') : t('modulesFound') }}
+      </div>
+    </div>
     <TagFilter @tags-updated="handleTagsUpdated" :currentStudent="true"/>
 
     <div class="filters">
@@ -205,5 +220,41 @@ const { t } = useLocale(); // Gebruik de useLocale composable
 .filter-item select:focus {
   outline: none;
   border-color: #D32F2F; /* Rode rand bij focus */
+}
+
+.search-bar {
+  margin-bottom: 0; /* Remove bottom margin as it's now in a flex container */
+  flex-grow: 1; /* Allow search bar to take available space */
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background-color: #f9f9f9;
+  color: #333;
+  font-size: 1em;
+  transition: border-color 0.2s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #D32F2F;
+}
+
+.modules-found-message {
+  text-align: right; /* Align text to the right within its container */
+  margin: 0; /* Remove vertical margins */
+  padding-left: 20px; /* Add some spacing from the search bar */
+  white-space: nowrap; /* Prevent message from wrapping */
+}
+
+.search-controls {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Space between search bar and message */
+  margin-bottom: 20px;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
 }
 </style>

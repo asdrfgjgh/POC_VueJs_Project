@@ -6,7 +6,8 @@ export const getAllModules = async (
   tags: string[],
   level?: string,
   location?: string,
-  studycredit?: number
+  studycredit?: number,
+  searchTerm?: string // Voeg zoekterm parameter toe
 ): Promise<{ modules: IChoiceModule[]; total: number }> => {
   const skip = (page - 1) * limit;
 
@@ -27,6 +28,14 @@ export const getAllModules = async (
 
   if (studycredit !== undefined) {
     query.studycredit = studycredit;
+  }
+
+  if (searchTerm) {
+    // Voeg $or operator toe voor het zoeken in naam of beschrijving
+    query.$or = [
+      { name: { $regex: searchTerm, $options: 'i' } }, // Case-insensitive search in name
+      { description: { $regex: searchTerm, $options: 'i' } }, // Case-insensitive search in description
+    ];
   }
 
 

@@ -11,6 +11,7 @@ router.get('/', async (req: Request, res: Response) => {
     const level = req.query.level as string || '';
     const location = req.query.location as string || '';
     const studycredit = req.query.studycredit ? parseInt(req.query.studycredit as string) : undefined;
+    const searchTerm = req.query.search as string || ''; // Extract search term
 
 
     // Lees tags uit de query, split ze op komma en filter lege strings
@@ -19,7 +20,7 @@ router.get('/', async (req: Request, res: Response) => {
       tags = req.query.tags.split(',').filter(tag => tag);
     }
 
-    const { modules, total } = await getAllModules(page, limit, tags, level, location, studycredit);
+    const { modules, total } = await getAllModules(page, limit, tags, level, location, studycredit, searchTerm);
 
     res.json({
       modules,

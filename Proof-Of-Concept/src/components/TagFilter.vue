@@ -76,12 +76,12 @@ h4 {
   cursor: pointer;
   transition: all 0.2s ease;
   font-weight: 500;
-  color: #000000; /* Changed from var(--color-text-soft) to black */
+  color: var(--color-text-soft);
 }
 
 .tags label:hover {
   border-color: var(--color-accent);
-  color: #000000; /* Changed from var(--color-text) to black */
+  color: var(--color-text);
 }
 
 /* De standaard checkbox, maar dan mooier */

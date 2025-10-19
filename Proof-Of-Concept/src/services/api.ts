@@ -8,7 +8,8 @@ export const getAllModules = async (
   tags: string[] = [],
   level?: string,
   location?: string,
-  studycredit?: number
+  studycredit?: number,
+  searchTerm?: string // Voeg nieuwe parameter toe
 ) => {
   // Gebruik URLSearchParams om de query parameters netjes op te bouwen
   const params = new URLSearchParams();
@@ -27,6 +28,9 @@ export const getAllModules = async (
   // Controleer of studycredit een waarde heeft (ook 0)
   if (studycredit != null) {
     params.append('studycredit', studycredit.toString());
+  }
+  if (searchTerm) { // Voeg zoekterm toe aan parameters
+    params.append('search', searchTerm);
   }
 
   const url = `${VITE_API_BASE_URL}/modules?${params.toString()}`;
