@@ -17,8 +17,8 @@ const translations: Translations = {
     EN: 'Modules',
   },
   myTags: {
-    NL: 'Mijn Tags',
-    EN: 'My Tags',
+    NL: 'Mijn Favorieten',
+    EN: 'My Favorites',
   },
   login: {
     NL: 'Inloggen',

@@ -100,7 +100,7 @@ const hasFavorites = computed(() => {
 <template>
   <div class="view-container user-tags-view">
     <h1>
-      {{ t('tagPopularityTitle') }}<span v-if="user"> {{ t('forLabel') }} {{ user.name }}</span>
+      {{ t('myFavoritesTitle') }}<span v-if="user"> {{ t('forLabel') }} {{ user.name }}</span>
     </h1>
     <div v-if="isLoading" class="loading">
       <span>{{ t('loadingData') }}</span>

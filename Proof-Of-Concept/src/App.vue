@@ -56,7 +56,6 @@ function setLanguage(lang: string) {
               </button>
               <div v-if="isDropdownOpen" class="dropdown-menu">
   <RouterLink to="/profile" @click="closeDropdown">{{ t('profileEdit') }}</RouterLink>
-  <RouterLink to="/favorites" @click="closeDropdown">{{ t('myFavorites') }}</RouterLink>
   <a @click="handleLogout" class="logout-button">{{ t('logout') }}</a>
 </div>
             </div>
@@ -194,7 +193,7 @@ nav.main-nav a.router-link-exact-active {
   width: 40px;
   height: 60px;
   padding: 0.25rem;
-  color: var(--color-accent);
+  color: white; /* Changed from var(--color-accent) to white for visibility */
   transition: all 0.2s ease-in-out;
   border-radius: 50%;
   box-sizing: border-box;

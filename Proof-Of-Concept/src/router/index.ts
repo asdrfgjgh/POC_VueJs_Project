@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import ModulesView from '../views/ModulesView.vue'
-import UserTagsView from '../views/UserTagsView.vue'
-import RegisterView from '../views/RegisterView.vue'
-import LoginView from '../views/LoginView.vue'
-import ProfileView from '@/views/ProfileView.vue'
-import FavoritesView from '@/views/FavoritesView.vue'
+import HomePage from '../views/HomePage.vue'
+import ModulesPage from '../views/ModulesPage.vue'
+import UserTagsPage from '../views/UserTagsPage.vue'
+import RegisterPage from '../views/RegisterPage.vue'
+import LoginPage from '../views/LoginPage.vue'
+import ProfilePage from '@/views/ProfilePage.vue'
+import FavoritesPage from '@/views/FavoritesPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,39 +13,39 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomePage
 
     },
     {
       path: '/modules',
       name: 'modules',
-      component: ModulesView
+      component: ModulesPage
     },
     {
       path: '/user-tags',
       name: 'user-tags',
-      component: UserTagsView
+      component: FavoritesPage
     },
         {
       path: '/register',
       name: 'register',
-      component: RegisterView
+      component: RegisterPage
     },
     {
       path: '/login',
       name: 'login',
-      component: LoginView
+      component: LoginPage
     },
         {
       path: '/profile',
       name: 'profile',
-      component: ProfileView,
+      component: ProfilePage,
       meta: { requiresAuth: true }
     },
     {
       path: '/favorites',
       name: 'favorites',
-      component: FavoritesView,
+      component: UserTagsPage,
       meta: { requiresAuth: true }
     }
   ]
